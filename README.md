@@ -1,2 +1,4 @@
 # Kors
-A discord bot.
+**A discord bot powered by nextcord.**
+
+`hey`

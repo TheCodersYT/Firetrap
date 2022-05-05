@@ -1,0 +1,2 @@
+# Kors
+A discord bot.

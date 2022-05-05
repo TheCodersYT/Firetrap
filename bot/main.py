@@ -11,6 +11,10 @@ intents = nextcord.Intents()
 
 bot = commands.Bot(command_prefix=">", intents=intents.all())
 
+for file in os.listdir("./cogs"):
+  if file.endswith(".py"):
+    bot.load_extension(f"cogs.{file[:-3]")
+
 token = "ODk3NTUzOTI5MTc5NjUyMTg2.GBI0Nv.amIkSRAWhpOi82ZWE3ler7_t6Nexuv9R37nj" # add ok on the end of the token
 
 @bot.event

@@ -30,13 +30,13 @@ class moderation(commands.Cog):
     @Cog.listener()
     async def on_ready(self):
         for guild in self.bot.guilds:
-            async with aiofiles.open(f"{guild.id}.txt", mode="a") as temp:
+            async with aiofiles.open(f"data/warnings/{guild.id}.txt", mode="a") as temp:
                 pass
 
             self.bot.warnings[guild.id] = {}
 
         for guild in self.bot.guilds:
-            async with aiofiles.open(f"{guild.id}.txt", mode="r") as file:
+            async with aiofiles.open(f"data/warnings/{guild.id}.txt", mode="r") as file:
                 lines = await file.readlines()
 
         for line in lines:
@@ -77,7 +77,7 @@ class moderation(commands.Cog):
 
         count = self.bot.warnings[ctx.guild.id][member.id][0]
 
-        async with aiofiles.open(f"{ctx.guild.id}.txt", mode="a") as file:
+        async with aiofiles.open(f"data/warnings/{ctx.guild.id}.txt", mode="a") as file:
             await file.write(f"{member.id} {ctx.author.id} {warnID} {reason}\n")
 
             warnEmbed = discord.Embed(title="Warn", description=f"{member.mention} has been warned and now has {count} {'warning' if first_warning else 'warnings'}.", color=Colour.red(), timestamp=ctx.message.created_at)
@@ -114,9 +114,9 @@ class moderation(commands.Cog):
         if warnid is None:
             return await ctx.send("**The ID you provided was not found or you did not specify one.**")
         else:
-            with open(f'{ctx.guild.id}.txt', 'r') as f:
+            with open(f'data/warnings/{ctx.guild.id}.txt', 'r') as f:
                 lines = f.readlines()
-            with open(f'{ctx.guild.id}.txt', 'w') as f:
+            with open(f'data/warnings/{ctx.guild.id}.txt', 'w') as f:
                 for line in lines:
                     if f'{warnid}' in line:
                         line = line.replace(f'{warnid}', '')

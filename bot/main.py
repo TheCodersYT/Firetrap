@@ -28,11 +28,18 @@ def get_prefix(bot, message):
         return prefix
     except TypeError:
         return ">"
-            
+    
+    
+class Kors(commands.Bot):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        
+    async def on_ready(self):
+        print("{self.bot.name}#{self.bot.discriminator is ready!")
 
 
 
-bot = commands.Bot(command_prefix=get_prefix, intents=discord.Intents(messages=True, guilds=True, members=True), help_command=None)
+bot = Kors(command_prefix=get_prefix, intents=discord.Intents(messages=True, guilds=True, members=True), help_command=None)
 
 server = "https://discord.gg/FksqxaDbXj"
 
@@ -46,10 +53,6 @@ for file in os.listdir("./cogs"):
   
 
 
-@bot.event
-async def on_ready():
-    print("Bot is ready!\n========================")
-    
 
     
     

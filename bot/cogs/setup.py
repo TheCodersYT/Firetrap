@@ -46,6 +46,30 @@ class Setup(commands.Cog):
                     
         await ctx.send(embed=embed)
                 
+    @config.command()
+    async def help(self, ctx, channel:discord.TextChannel):
+        if channel is None:
+            return await ctx.send("enter a channel lol")
+        
+        async with sql3.connect("data/help/{}.db".format(ctx.guild.id)) as db:
+            async with db.cursor() as cursor:
+                await cursor.execute("CREATE TABLE IF NOT EXISTS helpids (channel_id INTEGER, guildID INTEGER")
+                await cursor.exexute("SELECT channel_id FROM helpids WHERE guildID = ?", (ctx.guild.id,))
+                data = await cursor.fetchone()
+                if data:
+                    return await ctx.send("a help channel already exists!")
+                else:
+                    await cursor.execute("INSERT INTO helpids VALUES (?,?)", (channel.id, ctx.guild.id,))
+                    await ctx.send("Added {} into the help database.".format(channel.mention))
+                    
+            await cursor.close()
+            await db.commit()
+            
+                                   
+                               
+                                
+                                
+                             
     
     @config.command()
     @commands.guild_only()

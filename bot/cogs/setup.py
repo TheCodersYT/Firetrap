@@ -61,6 +61,7 @@ class Setup(commands.Cog):
                 else:
                     await cursor.execute("INSERT INTO helpids VALUES (?,?)", (channel.id, ctx.guild.id,))
                     await ctx.send("Added {} into the help database.".format(channel.mention))
+                    await channel.send(embed=embed, view=view)
                     
             await cursor.close()
             await db.commit()
